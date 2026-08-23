@@ -7,4 +7,4 @@
 - [x] Add optional D1 conversation logging and the chat-message migration.
 - [x] Add Gemini setup documentation and knowledge-base regression tests.
 - [x] Validate the chat fallback, knowledge retrieval, focused linting, and worker-aware build; the existing Next prerender test remains separately failing on `/_global-error`.
-- [ ] Commit and push the completed integration to GitHub.
+- [x] Commit and push the completed integration to GitHub.
