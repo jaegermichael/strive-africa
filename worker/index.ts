@@ -89,43 +89,56 @@ ${JSON.stringify(matches)}`;
 }
 
 async function streamGemini(writer: WritableStreamDefaultWriter<Uint8Array>, apiKey: string, model: string, messages: ChatMessage[], matches: Programme[], knowledge: Array<{ title: string; text: string }>) {
-  const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:streamGenerateContent?alt=sse`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json", "x-goog-api-key": apiKey },
-    body: JSON.stringify({
-      systemInstruction: { parts: [{ text: systemInstruction(matches, knowledge) }] },
-      contents: messages.slice(-10).map(message => ({ role: message.role === "assistant" ? "model" : "user", parts: [{ text: message.content }] })),
-      generationConfig: { temperature: 0.2, maxOutputTokens: 1000 },
-    }),
-  });
-  if (!response.ok || !response.body) {
-    const message = `Gemini request failed with ${response.status}`;
-    console.error("Strive Gemini upstream failure", { model, status: response.status });
-    throw new Error(message);
-  }
-
-  const reader = response.body.getReader();
-  const decoder = new TextDecoder();
-  let buffer = "";
-  let answer = "";
-  while (true) {
-    const { done, value } = await reader.read();
-    if (done) break;
-    buffer += decoder.decode(value, { stream: true });
-    const events = buffer.split("\n\n");
-    buffer = events.pop() || "";
-    for (const event of events) {
-      const data = event.split("\n").find(line => line.startsWith("data:"))?.slice(5).trim();
-      if (!data) continue;
-      try {
-        const chunk = JSON.parse(data) as GeminiChunk;
-        const text = chunk.candidates?.[0]?.content?.parts?.map(part => part.text || "").join("") || "";
-        if (text) { answer += text; await writeEvent(writer, "token", { token: text }); }
-      } catch { /* Ignore non-text provider frames. */ }
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 20_000);
+  try {
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:streamGenerateContent?alt=sse`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "x-goog-api-key": apiKey },
+      body: JSON.stringify({
+        systemInstruction: { parts: [{ text: systemInstruction(matches, knowledge) }] },
+        contents: messages.slice(-10).map(message => ({ role: message.role === "assistant" ? "model" : "user", parts: [{ text: message.content }] })),
+        generationConfig: { temperature: 0.2, maxOutputTokens: 1000 },
+      }),
+      signal: controller.signal,
+    });
+    if (!response.ok || !response.body) {
+      const message = `Gemini request failed with ${response.status}`;
+      console.error("Strive Gemini upstream failure", { model, status: response.status });
+      throw new Error(message);
     }
+
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = "";
+    let answer = "";
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+      const events = buffer.split("\n\n");
+      buffer = events.pop() || "";
+      for (const event of events) {
+        const data = event.split("\n").find(line => line.startsWith("data:"))?.slice(5).trim();
+        if (!data) continue;
+        try {
+          const chunk = JSON.parse(data) as GeminiChunk;
+          const text = chunk.candidates?.[0]?.content?.parts?.map(part => part.text || "").join("") || "";
+          if (text) { answer += text; await writeEvent(writer, "token", { token: text }); }
+        } catch { /* Ignore non-text provider frames. */ }
+      }
+    }
+    if (!answer.trim()) throw new Error("Gemini returned no text");
+    return answer.trim();
+  } catch (error) {
+    if (controller.signal.aborted) {
+      console.error("Strive Gemini upstream timeout", { model, timeoutMs: 20_000 });
+      throw new Error("Gemini request timed out after 20 seconds");
+    }
+    throw error;
+  } finally {
+    clearTimeout(timeout);
   }
-  if (!answer.trim()) throw new Error("Gemini returned no text");
-  return answer.trim();
 }
 
 async function handleChat(request: Request, env: Env, ctx: ExecutionContext) {

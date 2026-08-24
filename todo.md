@@ -18,3 +18,4 @@
 - [ ] Capture and resolve the production Gemini streaming error surfaced by the live adviser smoke test.
 - [ ] Revalidate live Gemini response, safety behavior, and full Russia catalogue retrieval after the fix.
 - [ ] Add non-secret Gemini upstream-failure diagnostics to the Worker and redeploy for root-cause capture.
+- [ ] Bound the external Gemini request duration so live visitors receive a timely safe fallback if the provider does not respond.
