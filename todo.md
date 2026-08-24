@@ -26,3 +26,6 @@
 - [x] Prevent Gemini from contradicting verified country totals when visitors ask how many programmes a destination contains.
 - [x] Audit all visitor-facing authoritative site content and close any grounded knowledge-base coverage gaps without adding unverified operational claims.
 - [x] Suppress irrelevant programme matching panels when a visitor asks a non-catalogue service or site-information question.
+- [ ] Validate the live adviser with complex grounded queries spanning catalogue, destination, service and safety boundaries.
+- [x] Review and apply alphabetical ordering for relevant visitor-facing catalogue details and structured result lists.
+- [x] Suppress programme panels for safety-boundary and destination-overview questions unless the visitor explicitly asks for catalogue options.
