@@ -38,3 +38,4 @@
 - [x] Verify whether the supplied Vercel build output identifies a GitHub-side build failure rather than an external secret configuration warning.
 - [x] Verify the apparent Next production build failure at `/_global-error` is absent under Vercel-equivalent `NODE_ENV=production` settings, avoiding an unsafe workaround.
 - [x] Add Vercel-specific build configuration so Vercel creates the required `.next/routes-manifest.json` instead of consuming the Cloudflare Worker Vite output.
+- [x] Diagnose and resolve the non-responsive chat endpoint on the Vercel deployment without weakening the Gemini secret boundary.
