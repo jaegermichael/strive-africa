@@ -98,7 +98,11 @@ async function streamGemini(writer: WritableStreamDefaultWriter<Uint8Array>, api
       generationConfig: { temperature: 0.2, maxOutputTokens: 1000 },
     }),
   });
-  if (!response.ok || !response.body) throw new Error(`Gemini request failed with ${response.status}`);
+  if (!response.ok || !response.body) {
+    const message = `Gemini request failed with ${response.status}`;
+    console.error("Strive Gemini upstream failure", { model, status: response.status });
+    throw new Error(message);
+  }
 
   const reader = response.body.getReader();
   const decoder = new TextDecoder();
@@ -154,7 +158,10 @@ async function handleChat(request: Request, env: Env, ctx: ExecutionContext) {
       }
       if (answer) await logMessage(env.DB, sessionId, "assistant", answer);
       await writeEvent(writer, "done", { ok: true });
-    } catch {
+    } catch (error) {
+      console.error("Strive Gemini chat failure", {
+        message: error instanceof Error ? error.message : String(error),
+      });
       await writeEvent(writer, "error", { message: "I could not complete that answer just now. Please continue on WhatsApp and the Strive team will help." });
     } finally { await writer.close(); }
   })());

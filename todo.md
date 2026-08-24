@@ -14,4 +14,7 @@
 - [ ] Run a live chat-stream smoke test against the deployed Worker endpoint.
 - [ ] Replace the exposed text runtime variable with an encrypted `GEMINI_API_KEY` Worker secret before live testing.
 - [x] Add the missing Cloudflare Worker entry-point configuration required by the Git-integrated deploy command.
-- [ ] Validate and push the Worker deployment configuration, then retry the production deployment.
+- [x] Validate and push the Worker deployment configuration, then retry the production deployment.
+- [ ] Capture and resolve the production Gemini streaming error surfaced by the live adviser smoke test.
+- [ ] Revalidate live Gemini response, safety behavior, and full Russia catalogue retrieval after the fix.
+- [ ] Add non-secret Gemini upstream-failure diagnostics to the Worker and redeploy for root-cause capture.

@@ -7,5 +7,12 @@
   "keep_vars": true,
   "secrets": {
     "required": ["GEMINI_API_KEY"]
+  },
+  "observability": {
+    "logs": {
+      "enabled": true,
+      "invocation_logs": true,
+      "persist": true
+    }
   }
 }
