@@ -23,4 +23,5 @@
 - [x] Correct the Gemini SSE parser so valid JSON response frames produce streamed adviser tokens rather than an empty-answer fallback.
 - [x] Capture non-secret Gemini response-shape metadata from the remaining empty-answer fallback before finalising token extraction.
 - [x] Prevent Gemini narrative text from contradicting the verified deterministic programme count returned in catalogue metadata.
-- [ ] Prevent Gemini from contradicting verified country totals when visitors ask how many programmes a destination contains.
+- [x] Prevent Gemini from contradicting verified country totals when visitors ask how many programmes a destination contains.
+- [x] Audit all visitor-facing authoritative site content and close any grounded knowledge-base coverage gaps without adding unverified operational claims.
