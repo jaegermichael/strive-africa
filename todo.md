@@ -32,3 +32,9 @@
 - [x] Verify the production Worker version contains the committed catalogue-intent safeguard before closing live validation.
 - [x] Respect an explicit visitor request not to show programme options, even when the question mentions studying in a listed destination.
 - [x] Merge the validated Gemini knowledge-adviser branch into the authoritative main branch and verify the remote result.
+- [x] Investigate why the linked Vercel project reports an outdated push despite the current authoritative main branch.
+- [x] Configure the encrypted GEMINI_API_KEY in the Vercel project if Vercel is intended to serve the live adviser.
+- [x] Verify the Vercel build no longer reports the GEMINI_API_KEY as missing after configuration.
+- [x] Verify whether the supplied Vercel build output identifies a GitHub-side build failure rather than an external secret configuration warning.
+- [x] Verify the apparent Next production build failure at `/_global-error` is absent under Vercel-equivalent `NODE_ENV=production` settings, avoiding an unsafe workaround.
+- [x] Add Vercel-specific build configuration so Vercel creates the required `.next/routes-manifest.json` instead of consuming the Cloudflare Worker Vite output.
