@@ -27,3 +27,12 @@ test("keeps visitor-facing application source free of emoji characters", async (
     assert.equal(emoji.test(source), false);
   }
 });
+
+test("renders primary mobile arrows with CSS rather than platform glyphs", async () => {
+  const css = await readFile(cssPath, "utf8");
+
+  assert.match(css, /html\{font-variant-emoji:text\}/);
+  assert.match(css, /\.headerCta span,\.heroLinks a:first-child span,\.searchForm button span\{display:inline-block;width:10px;height:10px/);
+  assert.match(css, /\.headerCta span:before,\.heroLinks a:first-child span:before,\.searchForm button span:before\{content:""/);
+  assert.match(css, /\.headerCta span:after,\.heroLinks a:first-child span:after,\.searchForm button span:after\{content:""/);
+});
