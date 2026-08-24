@@ -9,17 +9,17 @@
 - [x] Validate the chat fallback, knowledge retrieval, focused linting, and worker-aware build; the existing Next prerender test remains separately failing on `/_global-error`.
 - [x] Commit and push the completed integration to GitHub.
 - [x] Test greeting, site-knowledge, and full catalogue responses through the pushed adviser route.
-- [ ] Verify live Gemini output after the Worker is deployed with the `GEMINI_API_KEY` secret.
-- [ ] Confirm the deployed Strive Africa Worker has the Gemini secret configured without exposing its value.
-- [ ] Run a live chat-stream smoke test against the deployed Worker endpoint.
+- [x] Verify live Gemini output after the Worker is deployed with the `GEMINI_API_KEY` secret.
+- [x] Confirm the deployed Strive Africa Worker has the Gemini secret configured without exposing its value.
+- [x] Run a live chat-stream smoke test against the deployed Worker endpoint.
 - [ ] Replace the exposed text runtime variable with an encrypted `GEMINI_API_KEY` Worker secret before live testing.
 - [x] Add the missing Cloudflare Worker entry-point configuration required by the Git-integrated deploy command.
 - [x] Validate and push the Worker deployment configuration, then retry the production deployment.
-- [ ] Capture and resolve the production Gemini streaming error surfaced by the live adviser smoke test.
-- [ ] Revalidate live Gemini response, safety behavior, and full Russia catalogue retrieval after the fix.
-- [ ] Add non-secret Gemini upstream-failure diagnostics to the Worker and redeploy for root-cause capture.
-- [ ] Bound the external Gemini request duration so live visitors receive a timely safe fallback if the provider does not respond.
-- [ ] Switch the default live chat model to an available low-latency Gemini Flash model while preserving `GEMINI_MODEL` override support.
-- [ ] Correct the Gemini SSE parser so valid JSON response frames produce streamed adviser tokens rather than an empty-answer fallback.
-- [ ] Capture non-secret Gemini response-shape metadata from the remaining empty-answer fallback before finalising token extraction.
-- [ ] Prevent Gemini narrative text from contradicting the verified deterministic programme count returned in catalogue metadata.
+- [x] Capture and resolve the production Gemini streaming error surfaced by the live adviser smoke test.
+- [x] Revalidate live Gemini response, safety behavior, and full Russia catalogue retrieval after the fix.
+- [x] Add non-secret Gemini upstream-failure diagnostics to the Worker and redeploy for root-cause capture.
+- [x] Bound the external Gemini request duration so live visitors receive a timely safe fallback if the provider does not respond.
+- [x] Switch the default live chat model to an available low-latency Gemini Flash model while preserving `GEMINI_MODEL` override support.
+- [x] Correct the Gemini SSE parser so valid JSON response frames produce streamed adviser tokens rather than an empty-answer fallback.
+- [x] Capture non-secret Gemini response-shape metadata from the remaining empty-answer fallback before finalising token extraction.
+- [x] Prevent Gemini narrative text from contradicting the verified deterministic programme count returned in catalogue metadata.
