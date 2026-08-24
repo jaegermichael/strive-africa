@@ -25,3 +25,4 @@
 - [x] Prevent Gemini narrative text from contradicting the verified deterministic programme count returned in catalogue metadata.
 - [x] Prevent Gemini from contradicting verified country totals when visitors ask how many programmes a destination contains.
 - [x] Audit all visitor-facing authoritative site content and close any grounded knowledge-base coverage gaps without adding unverified operational claims.
+- [x] Suppress irrelevant programme matching panels when a visitor asks a non-catalogue service or site-information question.

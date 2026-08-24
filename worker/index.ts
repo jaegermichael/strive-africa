@@ -3,7 +3,7 @@ import handler from "vinext/server/app-router-entry";
 import rawProgrammes from "../app/data/programs.json";
 import { formatKnowledgeContext, retrieveKnowledge } from "./knowledgeBase.js";
 import { describeGeminiPayload, extractGeminiTexts } from "./geminiSse.js";
-import { fullCatalogueReply, isCountryTotalQuestion, isExplicitFullCatalogueRequest } from "./catalogueResponse.js";
+import { fullCatalogueReply, isCatalogueSearchQuestion, isCountryTotalQuestion, isExplicitFullCatalogueRequest } from "./catalogueResponse.js";
 
 interface Env {
   ASSETS: Fetcher;
@@ -168,7 +168,7 @@ async function handleChat(request: Request, env: Env, ctx: ExecutionContext) {
   const stream = new TransformStream<Uint8Array, Uint8Array>();
   const writer = stream.writable.getWriter();
   ctx.waitUntil((async () => {
-    const matches = isGreeting(latest.content) ? [] : getMatches(latest.content);
+    const matches = isGreeting(latest.content) || !isCatalogueSearchQuestion(latest.content) ? [] : getMatches(latest.content);
     const knowledge = retrieveKnowledge(latest.content);
     await logMessage(env.DB, sessionId, "user", latest.content);
     await writeEvent(writer, "meta", { programmes: matches, handoff: createHandoff(latest.content), sources: knowledge.map(document => document.title) });
