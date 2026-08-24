@@ -164,7 +164,7 @@ async function handleChat(request: Request, env: Env, ctx: ExecutionContext) {
         answer = "Hello, welcome to Strive Africa. I can help with programmes, destinations, approved listed fees, applications, career guidance, visa centre, flight bookings, student journeys, the study guide and contact details. What would you like to know?";
         await writeEvent(writer, "token", { token: answer });
       } else if (env.GEMINI_API_KEY) {
-        answer = await streamGemini(writer, env.GEMINI_API_KEY, env.GEMINI_MODEL || "gemini-3.7-flash", messages, matches, knowledge);
+        answer = await streamGemini(writer, env.GEMINI_API_KEY, env.GEMINI_MODEL || "gemini-2.5-flash-lite", messages, matches, knowledge);
       } else {
         answer = matches.length ? `I found ${matches.length} approved programme match${matches.length === 1 ? "" : "es"} in the Strive catalogue. Open “Matching programme options” to explore them, then verify current fees, intakes, entry requirements and availability with Strive before applying.` : `I can help with Strive’s approved programme catalogue and site information. To enable Gemini-powered answers, configure the server-side GEMINI_API_KEY secret; you can also continue with Strive on WhatsApp at ${WA_DISPLAY}.`;
         await writeEvent(writer, "token", { token: answer });

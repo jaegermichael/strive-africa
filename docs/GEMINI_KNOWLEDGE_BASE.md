@@ -19,6 +19,6 @@ Create a restricted Gemini API key in Google AI Studio, then set it for the Work
 npx wrangler secret put GEMINI_API_KEY
 ```
 
-For a model override, optionally set a Worker variable named `GEMINI_MODEL`. The default is `gemini-3.7-flash`.
+For a model override, optionally set a Worker variable named `GEMINI_MODEL`. The default is `gemini-2.5-flash-lite`, selected for low-latency chat and broad API availability.
 
 > Keep the API key out of Git, browser JavaScript, and public environment variables. Restrict it to the Gemini API in Google AI Studio or Google Cloud.

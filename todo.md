@@ -19,3 +19,4 @@
 - [ ] Revalidate live Gemini response, safety behavior, and full Russia catalogue retrieval after the fix.
 - [ ] Add non-secret Gemini upstream-failure diagnostics to the Worker and redeploy for root-cause capture.
 - [ ] Bound the external Gemini request duration so live visitors receive a timely safe fallback if the provider does not respond.
+- [ ] Switch the default live chat model to an available low-latency Gemini Flash model while preserving `GEMINI_MODEL` override support.
