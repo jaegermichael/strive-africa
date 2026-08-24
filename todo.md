@@ -22,3 +22,4 @@
 - [ ] Switch the default live chat model to an available low-latency Gemini Flash model while preserving `GEMINI_MODEL` override support.
 - [ ] Correct the Gemini SSE parser so valid JSON response frames produce streamed adviser tokens rather than an empty-answer fallback.
 - [ ] Capture non-secret Gemini response-shape metadata from the remaining empty-answer fallback before finalising token extraction.
+- [ ] Prevent Gemini narrative text from contradicting the verified deterministic programme count returned in catalogue metadata.
