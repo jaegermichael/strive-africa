@@ -41,3 +41,4 @@
 - [x] Diagnose and resolve the non-responsive chat endpoint on the Vercel deployment without weakening the Gemini secret boundary.
 - [x] Improve the adviser’s warm, natural conversation style and context-aware follow-ups without allowing unsupported claims.
 - [x] Review and selectively merge compatible changes from RonanJaeger721/strive-africa into the authoritative main branch.
+- [x] Add an accessible translucent orange social-link column on the left side of the hero using the official accounts.
