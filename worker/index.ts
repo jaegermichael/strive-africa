@@ -3,7 +3,7 @@ import handler from "vinext/server/app-router-entry";
 import rawProgrammes from "../app/data/programs.json";
 import { formatKnowledgeContext, retrieveKnowledge } from "./knowledgeBase.js";
 import { describeGeminiPayload, extractGeminiTexts } from "./geminiSse.js";
-import { fullCatalogueReply, isExplicitFullCatalogueRequest } from "./catalogueResponse.js";
+import { fullCatalogueReply, isCountryTotalQuestion, isExplicitFullCatalogueRequest } from "./catalogueResponse.js";
 
 interface Env {
   ASSETS: Fetcher;
@@ -177,7 +177,7 @@ async function handleChat(request: Request, env: Env, ctx: ExecutionContext) {
       if (isGreeting(latest.content)) {
         answer = "Hello, welcome to Strive Africa. I can help with programmes, destinations, approved listed fees, applications, career guidance, visa centre, flight bookings, student journeys, the study guide and contact details. What would you like to know?";
         await writeEvent(writer, "token", { token: answer });
-      } else if (matches.length && isExplicitFullCatalogueRequest(latest.content)) {
+      } else if (matches.length && (isExplicitFullCatalogueRequest(latest.content) || (getCountry(latest.content) && isCountryTotalQuestion(latest.content)))) {
         answer = fullCatalogueReply(matches.length, getCountry(latest.content));
         await writeEvent(writer, "token", { token: answer });
       } else if (env.GEMINI_API_KEY) {
