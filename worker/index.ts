@@ -2,7 +2,7 @@ import { handleImageOptimization, DEFAULT_DEVICE_SIZES, DEFAULT_IMAGE_SIZES } fr
 import handler from "vinext/server/app-router-entry";
 import rawProgrammes from "../app/data/programs.json";
 import { formatKnowledgeContext, retrieveKnowledge } from "./knowledgeBase.js";
-import { extractGeminiTexts } from "./geminiSse.js";
+import { describeGeminiPayload, extractGeminiTexts } from "./geminiSse.js";
 
 interface Env {
   ASSETS: Fetcher;
@@ -111,6 +111,7 @@ async function streamGemini(writer: WritableStreamDefaultWriter<Uint8Array>, api
     const decoder = new TextDecoder();
     let buffer = "";
     let answer = "";
+    const responseShapes: Array<ReturnType<typeof describeGeminiPayload>> = [];
     const consumeEvent = async (event: string) => {
       const data = event
         .split(/\r?\n/)
@@ -120,7 +121,9 @@ async function streamGemini(writer: WritableStreamDefaultWriter<Uint8Array>, api
         .trim();
       if (!data || data === "[DONE]") return;
       try {
-        for (const text of extractGeminiTexts(JSON.parse(data))) {
+        const payload = JSON.parse(data);
+        responseShapes.push(describeGeminiPayload(payload));
+        for (const text of extractGeminiTexts(payload)) {
           answer += text;
           await writeEvent(writer, "token", { token: text });
         }
@@ -135,7 +138,10 @@ async function streamGemini(writer: WritableStreamDefaultWriter<Uint8Array>, api
       for (const event of events) await consumeEvent(event);
     }
     if (buffer.trim()) await consumeEvent(buffer);
-    if (!answer.trim()) throw new Error("Gemini returned no text");
+    if (!answer.trim()) {
+      console.error("Strive Gemini returned no text", { model, responseShapes: responseShapes.slice(0, 3) });
+      throw new Error("Gemini returned no text");
+    }
     return answer.trim();
   } catch (error) {
     if (controller.signal.aborted) {
