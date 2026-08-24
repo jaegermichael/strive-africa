@@ -2,6 +2,7 @@ import { handleImageOptimization, DEFAULT_DEVICE_SIZES, DEFAULT_IMAGE_SIZES } fr
 import handler from "vinext/server/app-router-entry";
 import rawProgrammes from "../app/data/programs.json";
 import { formatKnowledgeContext, retrieveKnowledge } from "./knowledgeBase.js";
+import { extractGeminiTexts } from "./geminiSse.js";
 
 interface Env {
   ASSETS: Fetcher;
@@ -24,8 +25,6 @@ interface ExecutionContext {
 
 type Programme = { id: string; country: string; level: string; program: string; university: string; fee: number; currency: string; duration: string; durationLabel: string };
 type ChatMessage = { role: "user" | "assistant"; content: string };
-type GeminiChunk = { candidates?: Array<{ content?: { parts?: Array<{ text?: string }> } }> };
-
 const programmes = rawProgrammes as Programme[];
 const WA_NUMBER = "263716730064";
 const WA_DISPLAY = "+263 71 673 0064";
@@ -112,22 +111,30 @@ async function streamGemini(writer: WritableStreamDefaultWriter<Uint8Array>, api
     const decoder = new TextDecoder();
     let buffer = "";
     let answer = "";
+    const consumeEvent = async (event: string) => {
+      const data = event
+        .split(/\r?\n/)
+        .filter(line => line.startsWith("data:"))
+        .map(line => line.slice(5).trimStart())
+        .join("\n")
+        .trim();
+      if (!data || data === "[DONE]") return;
+      try {
+        for (const text of extractGeminiTexts(JSON.parse(data))) {
+          answer += text;
+          await writeEvent(writer, "token", { token: text });
+        }
+      } catch { /* Ignore non-text provider frames. */ }
+    };
     while (true) {
       const { done, value } = await reader.read();
       if (done) break;
       buffer += decoder.decode(value, { stream: true });
-      const events = buffer.split("\n\n");
+      const events = buffer.split(/\r?\n\r?\n/);
       buffer = events.pop() || "";
-      for (const event of events) {
-        const data = event.split("\n").find(line => line.startsWith("data:"))?.slice(5).trim();
-        if (!data) continue;
-        try {
-          const chunk = JSON.parse(data) as GeminiChunk;
-          const text = chunk.candidates?.[0]?.content?.parts?.map(part => part.text || "").join("") || "";
-          if (text) { answer += text; await writeEvent(writer, "token", { token: text }); }
-        } catch { /* Ignore non-text provider frames. */ }
-      }
+      for (const event of events) await consumeEvent(event);
     }
+    if (buffer.trim()) await consumeEvent(buffer);
     if (!answer.trim()) throw new Error("Gemini returned no text");
     return answer.trim();
   } catch (error) {
