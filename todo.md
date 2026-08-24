@@ -46,3 +46,4 @@
 - [x] Remove the hero social-rail background and leave only the official standalone social icons.
 - [x] Verify the hero social icons use the supplied official Facebook, TikTok, and Instagram destinations.
 - [x] Add clean official social icons to the Who We Are section using the verified social destinations.
+- [x] Improve responsive layouts across desktop, tablet, and mobile while keeping the visible interface free of emojis.
