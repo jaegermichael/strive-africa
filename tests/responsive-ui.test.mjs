@@ -17,6 +17,9 @@ test("keeps responsive layouts protected at tablet and mobile widths", async () 
   assert.match(css, /@media\(max-width:980px\)[\s\S]*?\.serviceGrid\{grid-template-columns:repeat\(2,minmax\(0,1fr\)\)/);
   assert.match(css, /@media\(max-width:720px\)[\s\S]*?\.destinationList\{grid-template-columns:repeat\(2,minmax\(0,1fr\)\)/);
   assert.match(css, /safe-area-inset-bottom/);
+  assert.match(css, /\.striveChatPanel\{bottom:calc\(68px \+ env\(safe-area-inset-bottom\)\)/);
+  assert.match(css, /\.striveChatFilters\{grid-template-columns:1fr\}/);
+  assert.match(css, /\.galleryClose\{right:13px;top:max\(12px,env\(safe-area-inset-top\)\);width:44px;height:44px/);
 });
 
 test("keeps visitor-facing application source free of emoji characters", async () => {
