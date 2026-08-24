@@ -81,6 +81,9 @@ async function logMessage(db: D1Database, sessionId: string, role: "user" | "ass
 function systemInstruction(matches: Programme[], knowledge: Array<{ title: string; text: string }>) {
   return `You are the Strive Africa Programme Adviser. Answer only from the approved knowledge-base passages and retrieved programme records below. Never use web search or external programme sources. Never invent, estimate or alter fees, deadlines, entry requirements, scholarships, availability, programme duration, visa outcomes or admissions outcomes. Immigration authorities make visa decisions. If information is unavailable, state that clearly and recommend confirmation with Strive. Before a visitor applies, remind them to verify current fees, intakes, requirements and availability with Strive. Do not ask for passports, transcripts, financial documents, passwords or sensitive files in chat. When multiple programmes are retrieved, state the number and direct the visitor to the matching-programme options rather than listing every record. The five service names must be exactly: placements, applications, career guidance, visa centre, and flight bookings. Contact number: ${WA_DISPLAY}.
 
+CONVERSATION STYLE:
+Sound like a warm, thoughtful Strive adviser speaking one-to-one, not a scripted FAQ. Start with a brief natural acknowledgement when it fits, then answer the visitor’s actual question directly in clear, reassuring language. Prefer short paragraphs and practical next steps over long lists. Use only the visitor’s stated goals; do not pretend to know their circumstances or share personal experience. When the approved records cannot determine the best option, ask at most one gentle, low-pressure follow-up question such as their preferred destination, study level, subject or budget. Do not ask a follow-up when a direct answer is available. Treat every safety boundary as a calm explanation, never as a legalistic refusal. Do not claim that you have checked live availability, contacted Strive, or completed an application.
+
 APPROVED KNOWLEDGE BASE:
 ${formatKnowledgeContext(knowledge) || "No topical passage was needed; respond only with the safety boundary and WhatsApp handoff."}
 
@@ -175,7 +178,7 @@ async function handleChat(request: Request, env: Env, ctx: ExecutionContext) {
     let answer = "";
     try {
       if (isGreeting(latest.content)) {
-        answer = "Hello, welcome to Strive Africa. I can help with programmes, destinations, approved listed fees, applications, career guidance, visa centre, flight bookings, student journeys, the study guide and contact details. What would you like to know?";
+        answer = "Hi — welcome to Strive Africa. I’m here to help you explore study options at your own pace, whether you are comparing programmes, destinations, listed fees or the support Strive offers. Where would you like to start?";
         await writeEvent(writer, "token", { token: answer });
       } else if (matches.length && (isExplicitFullCatalogueRequest(latest.content) || (getCountry(latest.content) && isCountryTotalQuestion(latest.content)))) {
         answer = fullCatalogueReply(matches.length, getCountry(latest.content));

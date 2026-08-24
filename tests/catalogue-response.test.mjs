@@ -40,6 +40,7 @@ test("orders matching programme cards alphabetically by programme, university, l
 
 test("uses the verified catalogue count in the complete-catalogue reply", () => {
   const reply = fullCatalogueReply(89, "Russia");
-  assert.match(reply, /89 approved programme options in Russia/);
+  assert.match(reply, /89 programme options in Russia/);
   assert.match(reply, /view all 89 records/);
+  assert.match(reply, /help you narrow the list down/);
 });

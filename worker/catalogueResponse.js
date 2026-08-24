@@ -34,5 +34,5 @@ export function alphabeticalProgrammeOrder(programmes) {
 
 export function fullCatalogueReply(count, country) {
   const label = country ? ` in ${country}` : "";
-  return `I found ${count} approved programme ${count === 1 ? "option" : "options"}${label} in the Strive catalogue. Open “Matching programme options” to view all ${count} records. Please verify current fees, intakes, entry requirements and availability with Strive before applying.`;
+  return `Absolutely — Strive’s approved catalogue currently has ${count} programme ${count === 1 ? "option" : "options"}${label}. Open “Matching programme options” to view all ${count} records. If you share the level, university or subject you have in mind, I can help you narrow the list down. Please verify current fees, intakes, entry requirements and availability with Strive before applying.`;
 }
