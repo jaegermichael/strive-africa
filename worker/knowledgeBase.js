@@ -32,6 +32,12 @@ export const knowledgeBase = [
     text: "Strive Africa is at Office 35, 6 Chelmsford Road, Belgravia, Harare, Zimbabwe. The approved call and WhatsApp number is +263 71 673 0064.",
   },
   {
+    id: "company-story-and-socials",
+    title: "Who Strive is and where to follow",
+    terms: ["who are you", "about", "company", "strivio", "nexafriqa", "director", "facebook", "instagram", "tiktok", "social", "follow"],
+    text: "The website identifies Strivio Education Solutions as a Zimbabwe-based education consultancy that connects students with international study opportunities. It says its directors bring industry experience and international exposure, and that Strivio supports Southern African student recruitment as a supplier to Nexafriqa (Pty) Ltd in South Africa. Official social links on the website are Facebook (facebook.com/afriqastrive), TikTok (@striveafrica.edu) and Instagram (@strive_africa).",
+  },
+  {
     id: "guide-and-journal",
     title: "Beyond Borders guide and journal",
     terms: ["guide", "journal", "newsletter", "update", "email", "prepare", "document", "boarding"],

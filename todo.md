@@ -40,4 +40,4 @@
 - [x] Add Vercel-specific build configuration so Vercel creates the required `.next/routes-manifest.json` instead of consuming the Cloudflare Worker Vite output.
 - [x] Diagnose and resolve the non-responsive chat endpoint on the Vercel deployment without weakening the Gemini secret boundary.
 - [x] Improve the adviser’s warm, natural conversation style and context-aware follow-ups without allowing unsupported claims.
-- [ ] Review and selectively merge compatible changes from RonanJaeger721/strive-africa into the authoritative main branch.
+- [x] Review and selectively merge compatible changes from RonanJaeger721/strive-africa into the authoritative main branch.

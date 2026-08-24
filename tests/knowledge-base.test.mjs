@@ -13,6 +13,11 @@ test("retrieves contact knowledge from an office question", () => {
   assert.equal(results[0]?.id, "contact");
 });
 
+test("retrieves the approved company story and official social links", () => {
+  assert.ok(retrieveKnowledge("Who is Strivio Education Solutions and what is Nexafriqa?").some(result => result.id === "company-story-and-socials"));
+  assert.ok(retrieveKnowledge("Where can I follow Strive Africa on Instagram or TikTok?").some(result => result.id === "company-story-and-socials"));
+});
+
 test("retrieves the audited programme-finder, service and study-guide content", () => {
   assert.ok(retrieveKnowledge("How do I filter the programme finder by university and level?").some(result => result.id === "programme-finder"));
   assert.ok(retrieveKnowledge("Can you help with a motivation letter and offer letter?").some(result => result.id === "applications-detail"));
