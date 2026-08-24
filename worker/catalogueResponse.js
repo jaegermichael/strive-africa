@@ -11,7 +11,12 @@ export function isCountryTotalQuestion(query) {
     || /\b(total|number|count)\b/i.test(query) && /\b(courses?|programmes?|programs?|options)\b/i.test(query);
 }
 
+export function requestsNoProgrammeOptions(query) {
+  return /\b(?:do not|don't|dont|without|no)\b[^.!?]{0,48}\b(?:show|list|listing|display|include|give)\b[^.!?]{0,48}\b(?:courses?|programmes?|programs?|options)\b/i.test(query);
+}
+
 export function isCatalogueSearchQuestion(query) {
+  if (requestsNoProgrammeOptions(query)) return false;
   if (/\b(visa|passport|documents?|financial|medical|police clearance|interview|admission|eligibility|assessment)\b/i.test(query)) return false;
   return isExplicitFullCatalogueRequest(query)
     || isCountryTotalQuestion(query)

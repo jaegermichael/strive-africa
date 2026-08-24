@@ -29,3 +29,5 @@
 - [ ] Validate the live adviser with complex grounded queries spanning catalogue, destination, service and safety boundaries.
 - [x] Review and apply alphabetical ordering for relevant visitor-facing catalogue details and structured result lists.
 - [x] Suppress programme panels for safety-boundary and destination-overview questions unless the visitor explicitly asks for catalogue options.
+- [x] Verify the production Worker version contains the committed catalogue-intent safeguard before closing live validation.
+- [x] Respect an explicit visitor request not to show programme options, even when the question mentions studying in a listed destination.

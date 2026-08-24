@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { alphabeticalProgrammeOrder, fullCatalogueReply, isCatalogueSearchQuestion, isCountryTotalQuestion, isExplicitFullCatalogueRequest } from "../worker/catalogueResponse.js";
+import { alphabeticalProgrammeOrder, fullCatalogueReply, isCatalogueSearchQuestion, isCountryTotalQuestion, isExplicitFullCatalogueRequest, requestsNoProgrammeOptions } from "../worker/catalogueResponse.js";
 
 test("recognises an explicit complete catalogue request", () => {
   assert.equal(isExplicitFullCatalogueRequest("Show all courses in Russia."), true);
@@ -18,8 +18,15 @@ test("only searches the catalogue for catalogue-focused questions", () => {
   assert.equal(isCatalogueSearchQuestion("Can Strive help with a motivation letter and explain my offer letter?"), false);
   assert.equal(isCatalogueSearchQuestion("Give me an overview of studying in Uzbekistan and its currency."), false);
   assert.equal(isCatalogueSearchQuestion("Can I send medical documents in this chat for a Malaysian intake?"), false);
+  assert.equal(isCatalogueSearchQuestion("Give me an overview of studying in Uzbekistan, but do not show programme options."), false);
   assert.equal(isCatalogueSearchQuestion("What courses can I study in Malaysia?"), true);
   assert.equal(isCatalogueSearchQuestion("how many total are in Malaysia"), true);
+});
+
+test("recognises an explicit request to omit programme options", () => {
+  assert.equal(requestsNoProgrammeOptions("Do not show programme options."), true);
+  assert.equal(requestsNoProgrammeOptions("Give me the Uzbekistan overview without listing courses."), true);
+  assert.equal(requestsNoProgrammeOptions("Show programme options in Uzbekistan."), false);
 });
 
 test("orders matching programme cards alphabetically by programme, university, level and country", () => {
