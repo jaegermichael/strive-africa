@@ -10,3 +10,8 @@
 - [x] Commit and push the completed integration to GitHub.
 - [x] Test greeting, site-knowledge, and full catalogue responses through the pushed adviser route.
 - [ ] Verify live Gemini output after the Worker is deployed with the `GEMINI_API_KEY` secret.
+- [ ] Confirm the deployed Strive Africa Worker has the Gemini secret configured without exposing its value.
+- [ ] Run a live chat-stream smoke test against the deployed Worker endpoint.
+- [ ] Replace the exposed text runtime variable with an encrypted `GEMINI_API_KEY` Worker secret before live testing.
+- [x] Add the missing Cloudflare Worker entry-point configuration required by the Git-integrated deploy command.
+- [ ] Validate and push the Worker deployment configuration, then retry the production deployment.

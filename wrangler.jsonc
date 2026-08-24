@@ -1,0 +1,11 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "strive-africa",
+  "main": "./worker/index.ts",
+  "compatibility_date": "2026-08-24",
+  "compatibility_flags": ["nodejs_compat"],
+  "keep_vars": true,
+  "secrets": {
+    "required": ["GEMINI_API_KEY"]
+  }
+}
