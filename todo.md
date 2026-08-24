@@ -42,3 +42,4 @@
 - [x] Improve the adviser’s warm, natural conversation style and context-aware follow-ups without allowing unsupported claims.
 - [x] Review and selectively merge compatible changes from RonanJaeger721/strive-africa into the authoritative main branch.
 - [x] Add an accessible translucent orange social-link column on the left side of the hero using the official accounts.
+- [x] Replace the hero social-rail letter marks with recognizable official Facebook, TikTok, and Instagram icon marks.
