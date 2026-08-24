@@ -31,3 +31,4 @@
 - [x] Suppress programme panels for safety-boundary and destination-overview questions unless the visitor explicitly asks for catalogue options.
 - [x] Verify the production Worker version contains the committed catalogue-intent safeguard before closing live validation.
 - [x] Respect an explicit visitor request not to show programme options, even when the question mentions studying in a listed destination.
+- [x] Merge the validated Gemini knowledge-adviser branch into the authoritative main branch and verify the remote result.
