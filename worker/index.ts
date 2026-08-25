@@ -2,6 +2,7 @@ import { handleImageOptimization, DEFAULT_DEVICE_SIZES, DEFAULT_IMAGE_SIZES } fr
 import handler from "vinext/server/app-router-entry";
 import rawProgrammes from "../app/data/programs.json";
 import { formatKnowledgeContext, retrieveKnowledge } from "./knowledgeBase.js";
+import { findIdealAnswer } from "./idealAnswers.js";
 import { describeGeminiPayload, extractGeminiTexts } from "./geminiSse.js";
 import { fullCatalogueReply, isCatalogueSearchQuestion, isCountryTotalQuestion, isExplicitFullCatalogueRequest } from "./catalogueResponse.js";
 
@@ -173,8 +174,9 @@ async function handleChat(request: Request, env: Env, ctx: ExecutionContext) {
   ctx.waitUntil((async () => {
     const matches = isGreeting(latest.content) || !isCatalogueSearchQuestion(latest.content) ? [] : getMatches(latest.content);
     const knowledge = retrieveKnowledge(latest.content);
+    const idealAnswer = findIdealAnswer(latest.content);
     await logMessage(env.DB, sessionId, "user", latest.content);
-    await writeEvent(writer, "meta", { programmes: matches, handoff: createHandoff(latest.content), sources: knowledge.map(document => document.title) });
+    await writeEvent(writer, "meta", { programmes: matches, handoff: createHandoff(latest.content), sources: [...knowledge.map(document => document.title), ...(idealAnswer ? ["Student question-bank answer"] : [])] });
     let answer = "";
     try {
       if (isGreeting(latest.content)) {
@@ -182,6 +184,9 @@ async function handleChat(request: Request, env: Env, ctx: ExecutionContext) {
         await writeEvent(writer, "token", { token: answer });
       } else if (matches.length && (isExplicitFullCatalogueRequest(latest.content) || (getCountry(latest.content) && isCountryTotalQuestion(latest.content)))) {
         answer = fullCatalogueReply(matches.length, getCountry(latest.content));
+        await writeEvent(writer, "token", { token: answer });
+      } else if (idealAnswer) {
+        answer = idealAnswer.answer;
         await writeEvent(writer, "token", { token: answer });
       } else if (env.GEMINI_API_KEY) {
         answer = await streamGemini(writer, env.GEMINI_API_KEY, env.GEMINI_MODEL || "gemini-2.5-flash-lite", messages, matches, knowledge);

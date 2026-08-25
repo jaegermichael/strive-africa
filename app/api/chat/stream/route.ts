@@ -1,5 +1,6 @@
 import rawProgrammes from "../../../data/programs.json";
 import { formatKnowledgeContext, retrieveKnowledge } from "../../../../worker/knowledgeBase.js";
+import { findIdealAnswer } from "../../../../worker/idealAnswers.js";
 import { describeGeminiPayload, extractGeminiTexts } from "../../../../worker/geminiSse.js";
 import { fullCatalogueReply, isCatalogueSearchQuestion, isCountryTotalQuestion, isExplicitFullCatalogueRequest } from "../../../../worker/catalogueResponse.js";
 
@@ -138,12 +139,15 @@ export async function POST(request: Request) {
   void (async () => {
     const matches = isGreeting(latest.content) || !isCatalogueSearchQuestion(latest.content) ? [] : getMatches(latest.content);
     const knowledge = retrieveKnowledge(latest.content);
-    await writeEvent(writer, "meta", { programmes: matches, handoff: createHandoff(latest.content), sources: knowledge.map(document => document.title) });
+    const idealAnswer = findIdealAnswer(latest.content);
+    await writeEvent(writer, "meta", { programmes: matches, handoff: createHandoff(latest.content), sources: [...knowledge.map(document => document.title), ...(idealAnswer ? ["Student question-bank answer"] : [])] });
     try {
       if (isGreeting(latest.content)) {
         await writeEvent(writer, "token", { token: "Hi — welcome to Strive Africa. I’m here to help you explore study options at your own pace, whether you are comparing programmes, destinations, listed fees or the support Strive offers. Where would you like to start?" });
       } else if (matches.length && (isExplicitFullCatalogueRequest(latest.content) || (getCountry(latest.content) && isCountryTotalQuestion(latest.content)))) {
         await writeEvent(writer, "token", { token: fullCatalogueReply(matches.length, getCountry(latest.content)) });
+      } else if (idealAnswer) {
+        await writeEvent(writer, "token", { token: idealAnswer.answer });
       } else {
         const apiKey = process.env.GEMINI_API_KEY;
         if (!apiKey) throw new Error("GEMINI_API_KEY is not configured");
