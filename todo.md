@@ -49,3 +49,4 @@
 - [x] Improve responsive layouts across desktop, tablet, and mobile while keeping the visible interface free of emojis.
 - [x] Replace mobile arrow glyphs with a consistent CSS-rendered directional mark for iOS and Android.
 - [x] Audit all remaining mobile sections, overlays, and floating controls; correct any responsive styling quirks found.
+- [x] Review the latest RonanJaeger721 repository updates and selectively merge compatible improvements into authoritative main.
