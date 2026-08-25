@@ -50,3 +50,5 @@
 - [x] Replace mobile arrow glyphs with a consistent CSS-rendered directional mark for iOS and Android.
 - [x] Audit all remaining mobile sections, overlays, and floating controls; correct any responsive styling quirks found.
 - [x] Review the latest RonanJaeger721 repository updates and selectively merge compatible improvements into authoritative main.
+- [x] Add a testimonial section that uses only verified student experiences or an honest verification-submission path.
+- [x] Create a separate, text-first Testimonials section without journey imagery or fabricated review content.
