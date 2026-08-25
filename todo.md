@@ -52,3 +52,4 @@
 - [x] Review the latest RonanJaeger721 repository updates and selectively merge compatible improvements into authoritative main.
 - [x] Add a testimonial section that uses only verified student experiences or an honest verification-submission path.
 - [x] Create a separate, text-first Testimonials section without journey imagery or fabricated review content.
+- [x] Extract the supplied reference questions and answer patterns, benchmark the adviser, and tune its grounded response format.
