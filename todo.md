@@ -55,3 +55,6 @@
 - [x] Extract the supplied reference questions and answer patterns, benchmark the adviser, and tune its grounded response format.
 - [x] Remove the separately added text-first Testimonials section while keeping the existing Student Experiences area.
 - [x] Extract the supplied answered chatbot content, vet it against approved facts, and add supported ideal-answer patterns to the knowledge base.
+- [x] Diagnose the HTTPS security warning on www.africastrive.com and document the required certificate or DNS remediation.
+- [x] Confirm the Vercel domain configuration and identify any remaining DNS or certificate action before public HTTPS verification.
+- [x] Audit and implement grounded on-page SEO improvements across metadata, keyword coverage, structured data, and crawlability.
