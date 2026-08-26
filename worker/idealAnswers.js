@@ -10,8 +10,8 @@ export const idealAnswerPatterns = [
   },
   {
     id: "office-and-contact",
-    terms: ["where is your office", "office located", "office address", "where are you based", "harare office", "office harare", "office"],
-    answer: "Strive Africa is at Office 35, 6 Chelmsford Road, Belgravia, Harare, Zimbabwe. You can call or WhatsApp the team on +263 71 673 0064 before visiting.",
+    terms: ["where is your office", "office located", "office address", "where are you based", "harare office", "office harare", "south africa office", "gauteng office", "office"],
+    answer: "Strive Africa has offices at Office 35, 6 Chelmsford Road, Belgravia, Harare, Zimbabwe, and Number 5 Benmore Gardens, Corworx, Gauteng, South Africa. You can call or WhatsApp +263 71 673 0064, or email batsirai@striveafriqa.com, before visiting.",
   },
   {
     id: "legitimacy-and-payment-safety",

@@ -28,8 +28,8 @@ export const knowledgeBase = [
   {
     id: "contact",
     title: "Contact and office",
-    terms: ["contact", "office", "address", "where", "phone", "call", "whatsapp", "meet"],
-    text: "Strive Africa is at Office 35, 6 Chelmsford Road, Belgravia, Harare, Zimbabwe. The approved call and WhatsApp number is +263 71 673 0064.",
+    terms: ["contact", "office", "address", "where", "phone", "call", "whatsapp", "email", "meet", "south africa", "gauteng"],
+    text: "Strive Africa has offices at Office 35, 6 Chelmsford Road, Belgravia, Harare, Zimbabwe, and Number 5 Benmore Gardens, Corworx, Gauteng, South Africa. The approved call and WhatsApp number is +263 71 673 0064, and the email address is batsirai@striveafriqa.com.",
   },
   {
     id: "company-story-and-socials",

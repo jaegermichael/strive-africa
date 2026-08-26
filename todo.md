@@ -58,3 +58,5 @@
 - [x] Diagnose the HTTPS security warning on www.africastrive.com and document the required certificate or DNS remediation.
 - [x] Confirm the Vercel domain configuration and identify any remaining DNS or certificate action before public HTTPS verification.
 - [x] Audit and implement grounded on-page SEO improvements across metadata, keyword coverage, structured data, and crawlability.
+- [x] Check current public visibility for a primary Harare study-abroad keyword and explain the reliable ranking measurement path.
+- [x] Review the latest RonanJaeger721 repository changes and selectively update authoritative main with compatible improvements.

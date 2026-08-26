@@ -36,5 +36,5 @@ test("uses high-intent terms naturally in visible homepage copy without keyword 
   assert.match(page, /Study abroad from Zimbabwe/);
   assert.match(page, /Harare-based university placement/);
   assert.match(page, /personal study-abroad consultation in Harare or on WhatsApp/);
-  assert.match(page, /Strive’s study-abroad consultants in Belgravia, Harare/);
+  assert.match(page, /Strive’s study-abroad consultants in Zimbabwe or South Africa/);
 });
